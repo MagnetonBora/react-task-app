@@ -8,6 +8,17 @@ const Container = styled.div`
     padding: 8px;
     margin-top: 8px;
     background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
+
+    display: flex;
+`;
+
+
+const Handle = styled.div`
+    width: 20px;
+    height: 20px;
+    background-color: orange;
+    border-radius: 4px;
+    margin-right: 8px;
 `;
 
 export default class Task extends React.Component {
@@ -21,8 +32,9 @@ export default class Task extends React.Component {
                 innerRef={provided.innerRef}
                 isDragging={snapshot.isDragging}
                 >
-                    {this.props.task.content
-                }</Container>
+                    <Handle />
+                    {this.props.task.content}
+                </Container>
             )}
             </Draggable>
         );
