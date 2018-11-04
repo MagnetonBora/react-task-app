@@ -3,13 +3,24 @@ import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
-    border: 1px solid lightgrey;
-    border-radius: 2px;
+    border: 3px solid lightgrey;
+    border-radius: 50%;
     padding: 8px;
     margin-top: 8px;
-    background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
+    background-color: ${props => 
+        props.isDragDisabled ? 'lightgrey' : props.isDragging ? 'lightgreen' : 'white'
+    };
+    width: 40px;
+    height: 40px;
 
     display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:focus {
+        outline: none;
+        border-color: red;
+    }
 `;
 
 
@@ -23,11 +34,12 @@ const Handle = styled.div`
 
 export default class Task extends React.Component {
     render() {
+        const isDragDisabled = this.props.task.id === 'task-1';
         return (
             <Draggable 
                 draggableId={this.props.task.id} 
                 index={this.props.index}
-                // isDragDisabled={this.props.task.id === 'task-1'}
+                isDragDisabled={isDragDisabled}
             >
                 {(provided, snapshot) => (
                     <Container
@@ -35,9 +47,10 @@ export default class Task extends React.Component {
                     {...provided.dragHandleProps}
                     innerRef={provided.innerRef}
                     isDragging={snapshot.isDragging}
+                    isDragDisabled={isDragDisabled}
                     >
-                        <Handle />
-                        {this.props.task.content}
+                    {/* <Handle /> */}
+                        {this.props.task.content[0]}
                     </Container>
                 )}
             </Draggable>
